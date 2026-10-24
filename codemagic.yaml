@@ -1,4 +1,3 @@
-
 workflows:
   ios-appetize:
     name: Build iOS App for Appetize
@@ -13,8 +12,8 @@ workflows:
       - name: Get Flutter packages
         script: flutter pub get
 
-      - name: Build unsigned iOS app
-        script: flutter build ios --debug --no-codesign
+      - name: Build iOS Simulator app
+        script: flutter build ios --simulator --debug
 
     artifacts:
-      - build/ios/iphoneos/*.app
+      - build/ios/iphonesimulator/*.app
