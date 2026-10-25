@@ -7,6 +7,8 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
+    groups:
+      - appetize_credentials
 
   # GitHub notifies Codemagic using a webhook (an automated HTTP callback that sends real-time data from one application to another the moment a specific event occurs) that triggers the workflow
     triggering:
@@ -16,6 +18,7 @@ workflows:
         - pattern: main
           include: true
 
+    
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
@@ -23,5 +26,23 @@ workflows:
       - name: Build iOS Simulator app
         script: flutter build ios --simulator --debug
 
-    artifacts:
-      - build/ios/iphonesimulator/*.app
+      - name: Package iOS app
+        script: |
+          APP_PATH="build/ios/iphonesimulator/Runner.app"
+
+          if [ ! -d "$APP_PATH" ]; then
+            echo "Error: $APP_PATH was not found."
+            exit 1
+          fi
+
+          ditto -c -k --sequesterRsrc --keepParent \
+            "$APP_PATH" \
+            "$CM_BUILD_DIR/ios_app.zip"
+
+      - name: Upload to Appetize
+        script: |
+          curl --fail-with-body --show-error \
+            --request POST \
+            "https://api.appetize.io/v1/apps/$APPETIZE_PUBLIC_KEY" \
+            --header "X-API-KEY: $APPETIZE_API_TOKEN" \
+            --form "file=@$CM_BUILD_DIR/ios_app.zip"
