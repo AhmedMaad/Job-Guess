@@ -53,6 +53,7 @@ class _JobScreenState extends State<JobScreen> {
       ), //Cupertino Navigation Bar
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               _currentJob,
