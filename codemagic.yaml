@@ -1,4 +1,3 @@
-
 workflows:
   ios-appetize:
     name: Build iOS App for Appetize
@@ -28,22 +27,13 @@ workflows:
       - name: Package iOS app
         script: |
           APP_PATH="build/ios/iphonesimulator/Runner.app"
-
-          if [ ! -d "$APP_PATH" ]; then
+          test -d "$APP_PATH" || {
             echo "Error: $APP_PATH was not found."
             exit 1
-          fi
-
+          }
           ditto -c -k --sequesterRsrc --keepParent \
-            "$APP_PATH" \
-            "$CM_BUILD_DIR/ios_app.zip"
+            "$APP_PATH" "$CM_BUILD_DIR/ios_app.zip"
 
-    artifacts:
-      - build/ios/iphonesimulator/*.app
-      - $CM_BUILD_DIR/ios_app.zip
-
-    # Upload runs only after the build and packaging succeed.
-    scripts_post:
       - name: Upload to Appetize
         script: |
           curl --fail-with-body --show-error \
@@ -51,3 +41,7 @@ workflows:
             "https://api.appetize.io/v1/apps/$APPETIZE_PUBLIC_KEY" \
             --header "X-API-KEY: $APPETIZE_API_TOKEN" \
             --form "file=@$CM_BUILD_DIR/ios_app.zip"
+
+    artifacts:
+      - build/ios/iphonesimulator/*.app
+      - $CM_BUILD_DIR/ios_app.zip
