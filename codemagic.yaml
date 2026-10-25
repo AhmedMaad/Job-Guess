@@ -8,6 +8,14 @@ workflows:
       flutter: stable
       xcode: latest
 
+  # GitHub notifies Codemagic using a webhook (an automated HTTP callback that sends real-time data from one application to another the moment a specific event occurs) that triggers the workflow
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
@@ -17,14 +25,3 @@ workflows:
 
     artifacts:
       - build/ios/iphonesimulator/*.app
-
-  # GitHub notifies Codemagic using a webhook (an automated HTTP callback that sends real-time data from one application to another the moment a specific event occurs) that triggers the workflow
-  ios-workflow:
-    name: iOS Simulator Build
-
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: main
-          include: true
