@@ -58,12 +58,12 @@ class _JobScreenState extends State<JobScreen> {
             Text(
               _currentJob,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ),
+            ), //Text
             CupertinoButton(
               onPressed: _isButtonPressed ? null : _revealJob,
               child: Text('Show the answer'),
-            ),
-          ],
+            ),//Cupertino Button
+          ],//children
         ), //Column
       ), //Center
     ); //Cupertino Page Scaffold
