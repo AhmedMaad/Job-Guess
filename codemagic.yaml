@@ -1,3 +1,4 @@
+
 workflows:
   ios-appetize:
     name: Build iOS App for Appetize
@@ -7,10 +8,9 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
-    groups:
-      - appetize_credentials
+      groups:
+        - appetize_credentials
 
-  # GitHub notifies Codemagic using a webhook (an automated HTTP callback that sends real-time data from one application to another the moment a specific event occurs) that triggers the workflow
     triggering:
       events:
         - push
@@ -18,7 +18,6 @@ workflows:
         - pattern: main
           include: true
 
-    
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
@@ -39,6 +38,12 @@ workflows:
             "$APP_PATH" \
             "$CM_BUILD_DIR/ios_app.zip"
 
+    artifacts:
+      - build/ios/iphonesimulator/*.app
+      - $CM_BUILD_DIR/ios_app.zip
+
+    # Upload runs only after the build and packaging succeed.
+    scripts_post:
       - name: Upload to Appetize
         script: |
           curl --fail-with-body --show-error \
