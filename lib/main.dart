@@ -34,7 +34,7 @@ class JobScreen extends StatefulWidget {
 }
 
 class _JobScreenState extends State<JobScreen> {
-  String _currentJob = 'Android or iOS Develper?';
+  String _currentJob = 'Android or iOS Developer?';
   bool _isButtonPressed = false;
 
   void _revealJob() {
@@ -49,6 +49,7 @@ class _JobScreenState extends State<JobScreen> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Job Guess'),
+        automaticBackgroundVisibility: false,
       ), //Cupertino Navigation Bar
       child: Center(
         child: Column(
