@@ -46,7 +46,7 @@ class _JobScreenState extends State<JobScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return CupertinoPageScaffold( //Inside the "build" function
       navigationBar: CupertinoNavigationBar(
         middle: Text('Job Guess'),
         automaticBackgroundVisibility: false,
@@ -62,8 +62,9 @@ class _JobScreenState extends State<JobScreen> {
             CupertinoButton(
               onPressed: _isButtonPressed ? null : _revealJob,
               child: Text('Show the answer'),
-            ),//Cupertino Button
-          ],//children
+            ),
+            Icon(CupertinoIcons.up_arrow)
+          ],
         ), //Column
       ), //Center
     ); //Cupertino Page Scaffold
