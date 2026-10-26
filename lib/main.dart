@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 
 void main() {
@@ -46,7 +47,8 @@ class _JobScreenState extends State<JobScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold( //Inside the "build" function
+    return CupertinoPageScaffold(
+      //Inside the "build" function
       navigationBar: CupertinoNavigationBar(
         middle: Text('Job Guess'),
         automaticBackgroundVisibility: false,
@@ -57,9 +59,23 @@ class _JobScreenState extends State<JobScreen> {
           children: [
             Container(
               margin: EdgeInsets.all(16.0),
-              child: Text(
-                _currentJob,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              child: DefaultTextStyle(
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: CupertinoColors.black,
+                ),
+                child: _isButtonPressed
+                    ? AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText(
+                            _currentJob,
+                            speed: Duration(milliseconds: 300),
+                          ),
+                        ],
+                        totalRepeatCount: 1,
+                      )
+                    : Text(_currentJob),
               ),
             ),
             CupertinoButton(
@@ -68,8 +84,8 @@ class _JobScreenState extends State<JobScreen> {
             ),
             Icon(CupertinoIcons.up_arrow),
           ],
-        ), //Column
-      ), //Center
-    ); //Cupertino Page Scaffold
+        ),
+      ),
+    );
   }
 }
