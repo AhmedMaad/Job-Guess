@@ -55,15 +55,18 @@ class _JobScreenState extends State<JobScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              _currentJob,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            ), //Text
+            Container(
+              margin: EdgeInsets.all(16.0),
+              child: Text(
+                _currentJob,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+            ),
             CupertinoButton(
               onPressed: _isButtonPressed ? null : _revealJob,
               child: Text('Show the answer'),
             ),
-            Icon(CupertinoIcons.up_arrow)
+            Icon(CupertinoIcons.up_arrow),
           ],
         ), //Column
       ), //Center
