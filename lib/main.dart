@@ -59,7 +59,7 @@ class _JobScreenState extends State<JobScreen> {
               margin: EdgeInsets.all(16.0),
               child: Text(
                 _currentJob,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
             ),
             CupertinoButton(
